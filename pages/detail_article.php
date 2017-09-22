@@ -10,7 +10,25 @@ $reponse = $bdd->query("SELECT art_titre, art_auteur, art_date, art_content FROM
 } catch (Exception $e) {
     echo $e->getMessage(), "\n";
 }
+
+
+if(!empty($_POST)) {
+$pseudo = htmlspecialchars($_POST['pseudo']);
+$com = htmlspecialchars($_POST['com']);
+$req = ("INSERT INTO com_commentaire (com_oid, com_pseudo, com_content) FROM com_commentaire INNER JOIN art_article ON com_art_oid = art_oid");
+
+
+}
+
+try {
+ $bdd->query($req);
+
+} catch (Exception $e) {
+    echo $e->getMessage(), "\n";
+}
+
 ?>
+
 
 
 <table class='table'>
@@ -50,8 +68,8 @@ $reponse = $bdd->query("SELECT art_titre, art_auteur, art_date, art_content FROM
 
 <div id="content"><?=$donnees['art_content'] ?></div>
 
-
-<form action="" method="post" class="text-center">
+<!-- formulaire commentaires -->
+<form action="" method="post" class="text">
 
 <ul class="list-unstyled">
     
@@ -60,8 +78,11 @@ $reponse = $bdd->query("SELECT art_titre, art_auteur, art_date, art_content FROM
             <input require type="text" class="form-control" name="pseudo" id="pseudo" placeholder="pseudo">
         </div>
         
-    <input type="textarea" name="com" id="com" col="400" row="100">
+        
+    <li><textarea type="text" name="com" id="com" cols="100" rows="15"></textarea> </li>
 </ul>
 
 <input type="submit" value="Envoyer" class="btn btn-success">
 </form>
+
+<!--  <div class="pre-scrollable"></div> -->
