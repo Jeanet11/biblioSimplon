@@ -1,6 +1,7 @@
 <?php
 	
-
+	$homeAdmin = '';
+	$disconect = '';
     if(!empty($_SESSION['login'])){
 		$disconect = "<a class='navbar-brand' href='?p=logout'><i class='glyphicon glyphicon-log-out'></i></a>";
 		$homeAdmin = '<a href="?p=indexAdmin" class="navbar-brand"><i class="glyphicon glyphicon-cog"></i></a>';
