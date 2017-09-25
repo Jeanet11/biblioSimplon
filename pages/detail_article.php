@@ -11,7 +11,8 @@ if(isset($_SESSION['login'])){
 
 // requete affichage du contenu entier
 try {
-    $reponse = $bdd->query("SELECT a.art_oid, a.art_titre, a.art_auteur, a.art_date, a.art_content, g.gnr_libele FROM art_article a INNER JOIN gnr_genre g   ON  (art_gnr_oid = gnr_oid) WHERE art_oid = $id");
+
+    $reponse = $bdd->query(sprintf("SELECT a.art_oid, a.art_titre, a.art_auteur, a.art_date, a.art_content, g.gnr_libele FROM art_article a INNER JOIN gnr_genre g   ON  (art_gnr_oid = gnr_oid) WHERE art_oid = %d", $id));
     $donnees = $reponse->fetch();
 
 } catch (Exception $e) {
