@@ -22,8 +22,6 @@ try {
 //ajout dans la base
 if(!empty($_POST)) {
     
-// $sql_ajout_com = "INSERT INTO com_commentaire(com_oid, com_pseudo, com_content, com_date, com_art_oid)
-// VALUES ('', $pseudo, $com, NOW(),$id)";
     try {
 
     $pseudo = htmlspecialchars($_POST['pseudo']);
