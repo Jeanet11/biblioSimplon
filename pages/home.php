@@ -3,12 +3,15 @@
     if(!empty($_GET['search'])){
         $endrequ =sprintf(" and art_titre like '%%%s%%'",$_GET['search']);
     }
+    if(!empty($_GET['tri'])){
+        $endrequ.=sprintf(" order by %s",$_GET['tri']);
+    }   
     $response = $bdd->query("Select * from art_article, gnr_genre where art_gnr_oid = gnr_oid".$endrequ);
     $data=$response->fetchAll();
     
 ?>
 
-
+<div id="idlist">
 <table class='table'>
     <thead>
     <tr>
@@ -32,9 +35,10 @@
         </th>
         </tr>
     </thead>
-    <tbody>
+   
+    <tbody class='list'>
         <?php foreach($data as $values): ?>
-        <tr>
+        <tr class='name'>
             <td><?= $values['art_titre'] ?></td>
             <td><?= $values['art_auteur'] ?></td>
             <td><?= $values['gnr_libele'] ?></td>
@@ -51,5 +55,10 @@
             </td> 
         </tr>
                 <?php endforeach; ?>
-    </tbody>   
+    </tbody>
+    <ul class='pagination'></ul>
+    </div>   
 </table>
+<script type='text/javascript' src='node_modules/jquery/dist/jquery.js'></script>
+<script src="node_modules/list.js/dist/list.js"></script>
+<script src="assets/js/paginate.js"></script>

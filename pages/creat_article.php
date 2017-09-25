@@ -13,6 +13,7 @@ if(!empty($_POST)):
     $sql_ajout_article = sprintf("INSERT INTO art_article (art_titre,art_content,art_auteur,art_date, art_gnr_oid)VALUES 
                                 ('%s','%s','%s','%s', %d)", $titre, $contenu, $auteur, $date, $genre);
     try {
+      
         $bdd->query($sql_ajout_article);
         $succes = "L'article suivant est enregistré : ".$titre;
     } catch (Exception $e) {
