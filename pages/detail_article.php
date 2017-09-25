@@ -1,45 +1,83 @@
 <?php 
 
 $id = $_GET['id'];
+$buttons ='';
+$buttons2 = '';
+if(isset($_SESSION['login'])){
+    $buttons='<a href="?p=modif&id='.$id.'"><i class="glyphicon glyphicon-pencil"></i></a>';
+    $buttons2='<div class="col-md-1"><a href="?p=suppr&id='.$id.'"><i class=" glyphicon glyphicon-trash"></i></a></div>';
+}
 
-
-// affiche du contenu entier
+// requete affichage du contenu entier
 try {
-    $reponse = $bdd->query("SELECT art_titre, art_auteur, art_date, art_content FROM art_article WHERE art_oid = $id");
+    $reponse = $bdd->query("SELECT a.art_oid, a.art_titre, a.art_auteur, a.art_date, a.art_content, g.gnr_libele FROM art_article a INNER JOIN gnr_genre g   ON  (art_gnr_oid = gnr_oid) WHERE art_oid = $id");
     $donnees = $reponse->fetch();
 
 } catch (Exception $e) {
     echo $e->getMessage(), "\n";
 }
 
-?>
-<ul class="list-unstyled list-inline">
+//ajout dans la base
+if(!empty($_POST)) {
     
+// $sql_ajout_com = "INSERT INTO com_commentaire(com_oid, com_pseudo, com_content, com_date, com_art_oid)
+// VALUES ('', $pseudo, $com, NOW(),$id)";
+    try {
+
+    $pseudo = htmlspecialchars($_POST['pseudo']);
+    $com = htmlspecialchars($_POST['com']);
+
+    $sql_ajout_com = sprintf("INSERT INTO com_commentaire(com_pseudo, com_content, com_art_oid)
+        VALUES ('%s' , '%s' , %d)", $pseudo, $com, $id) ;
+
+   
+     $req=$bdd->exec($sql_ajout_com);
     
-        <li><h2 ><?= $donnees['art_titre'] ?></h2></li>
-        <li></li>
-        <li><h4 ><?= $donnees['art_auteur'] ?></h4></li>
- </ul>   
-    <hr>
-        
+ } catch (Exception $e) {
+    echo $e->getMessage(), "\n";
+}
   
-<div  id="content"><?=$donnees['art_content'] ?></div>
-<hr>
-<div ><?= $donnees['art_date'] ?></div>
 
+}
+
+?>
+
+<!-- affichage html -->
+<section class="clearfix container" >
+    <div class="row">
+        <h2 class="col-md-12"><?= $donnees['art_titre'] ?></h2>
+       
+      
+     </div>
+
+    <div class="row">
+       <div class="col-md-9"><h4><?= $donnees['gnr_libele'] ?></h4></div>
+        <div class ='col-md-offset-2 col-md-1'><?= $buttons.$buttons2 ?></div>              
+   </div>
+
+
+        <hr>
+    
+    <div  id="content"><?=$donnees['art_content'] ?></div>
+    <hr>
+    <ul class="clearfix list-unstyled list_inline">
+        <li class='pull-right'><strong><?= $donnees['art_auteur'] ?></strong></li>
+        <li></li>
+         <li class="pull-right"><?= $donnees['art_date'] ?></li>
+    </ul>
 </div>
-
+<div class="col-md-1 "><button class="pull-right btn btn-primary" type="submit" >Télécharger</button></div>
+</section >
 
 <!-- section commentaires -->
+<section >
 <h4><strong>Commentaires</strong></h4>
 
 <?php
-
-//affichage des commentaires
 $reponse->closeCursor();
 
-$reponse2 = $bdd->query("SELECT * FROM com_commentaire WHERE com_art_oid = $id");
-
+//affichage des commentaires
+$reponse2 = $bdd->query("SELECT * FROM com_commentaire WHERE com_art_oid = $id ORDER BY com_date DESC");
 ?>
 
 <div class="container well">
@@ -53,41 +91,15 @@ $reponse2 = $bdd->query("SELECT * FROM com_commentaire WHERE com_art_oid = $id")
             <div class="col-md-1 col-md-offset comment"><p><?= $donnees['com_date'] ?></p></div>
     
     </div>
-
-
-
+    
 <?php
 }
 
 $reponse2->closeCursor();
 
 ?>
+<br>
 
-
-</table>
-
-<?php
-//creation d'un commentaire dans la bdd
-if(!empty($_POST)) {
-    $pseudo = htmlspecialchars($_POST['pseudo']);
-    $com = htmlspecialchars($_POST['com']);
-
-
-    $sql_ajout_com = sprintf("INSERT INTO com_commentaire(com_pseudo, com_content, com_art_oid)
-        VALUES ('%' , '%' , %d)", $pseudo, $com, $id) ;
-
-    try {
-
-     $bdd->query($sql_ajout_com);
-
- } catch (Exception $e) {
-    echo $e->getMessage(), "\n";
-}
-}
-
-?>
-
-<hr>
 
  <!-- formulaire d'ajout de commentaire -->
     <h4>Ajouter un commentaire</h4>
@@ -96,7 +108,7 @@ if(!empty($_POST)) {
 
         <div class="col-md-2 form-group">
             <label class="sr-only" for="pseudo">Pseudo</label>
-            <input type="text" class="form-control" id="pseudo" placeholder="pseudo" name="pseudo" maxlength="20">
+            <input type="text" class="form-control" id="pseudo" placeholder="pseudo" name="pseudo" maxlength="50">
         </div>
  
          
@@ -112,4 +124,11 @@ if(!empty($_POST)) {
     </form>
 </div>
 
+</section>
 
+<?php
+    if (!empty($succes)){
+        echo "<h2>".$succes."</h2>";
+        $succes = "";
+    }
+?>
