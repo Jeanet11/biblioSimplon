@@ -1,4 +1,7 @@
 <?php
+if(empty($_SESSION['login'])){
+        header('Location: ?p=home');
+    }
 //Traitement PHP
 if(!empty($_POST)):
     $titre = htmlspecialchars($_POST['titre']);
@@ -38,8 +41,8 @@ try {
     </li><br/>
     <li class="form-inline">
         <div class="form-group">
-            <input require type="text" name="titre" id="titre" placeholder="Titre">
-            <input type="text" name="auteur" id="auteur" placeholder="Auteur">
+            <input require type="text" class="form-control" name="titre" id="titre" placeholder="Titre">
+            <input type="text" name="auteur" class="form-control" id="auteur" placeholder="Auteur">
             <select name="genre" id="genre" class="form-control">
                 <optgroup label="Genre">
                     <?php foreach ($sql_genre as $key => $value) :?>
@@ -47,7 +50,7 @@ try {
                     <?php endforeach ?>
                 </optgroup>
             </select>
-            <input type="date" name="date" id="date">
+            <input type="date" name="date" class="form-control" id="date">
         </div>
     </li><br/>
     <li><textarea name="contenu" id="contenu" cols="100" rows="30"></textarea></li>
