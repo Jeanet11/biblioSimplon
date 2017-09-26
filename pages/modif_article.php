@@ -7,19 +7,19 @@ if(!empty($_POST)) {
     
     try {
 
-    $titre = htmlspecialchars($_POST['titre']);
-    $auteur = htmlspecialchars($_POST['auteur']);
-    $date = htmlspecialchars($_POST['date']);
-    $content = htmlspecialchars($_POST['content']);
+        $titre = htmlspecialchars($_POST['titre']);
+        $auteur = htmlspecialchars($_POST['auteur']);
+        $date = htmlspecialchars($_POST['date']);
+        $content = htmlspecialchars($_POST['content']);
 
 
-    $sql_modif_article = sprintf("UPDATE art_article SET art_titre='%s', art_auteur='%s', art_date='%s', art_content='%s' WHERE art_oid=%d", $titre, $auteur, $date, $content, $id);
-   
-     $req=$bdd->exec($sql_modif_article);
-    
- } catch (Exception $e) {
-    echo $e->getMessage(), "\n";
-}
+        $sql_modif_article = sprintf("UPDATE art_article SET art_titre='%s', art_auteur='%s', art_date='%s', art_content='%s' WHERE art_oid=%d", $titre, $auteur, $date, $content, $id);
+
+        $req=$bdd->exec($sql_modif_article);
+        $succes = "Les modifications sont enregistrées ";
+    } catch (Exception $e) {
+        echo $e->getMessage(), "\n";
+    }
 }
 
 try {
@@ -34,7 +34,10 @@ try {
  
 $reponse->closeCursor();
 
-
+if (!empty($succes)){
+    echo "<h1>".$succes."</h1>";
+    $succes = "";
+}
 ?>
 
 <form action="" method="post" class="text-center">
@@ -47,7 +50,7 @@ $reponse->closeCursor();
 			<div class="form-group">
 				<?= '<input require type="text" class="form-control" name="titre" id="titre" value ="'.$donnees['art_titre'].'"/>' ?>
 				<?= '<input require type="text" class="form-control" name="auteur" id="auteur" value ="'.$donnees['art_auteur'].'"/>' ?> 
-				<?= '<input require type="text" class="form-control" name="date" id="date" value ="'.$donnees['art_date'].'"/>' ?> 
+				<?= '<input require type="date" class="form-control" name="date" id="date" value ="'.$donnees['art_date'].'"/>' ?> 
 
 				
 			</div>
