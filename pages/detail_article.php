@@ -46,7 +46,7 @@ $reponse2 = $bdd->query("SELECT * FROM com_commentaire WHERE com_art_oid = $id O
 <!-- affichage html -->
 <section class="clearfix container" >
     <div class="row">
-        <h2 class="col-md-12"><?= $donnees['art_titre'] ?></h2>
+        <h2 id ='title' class="col-md-12"><?= $donnees['art_titre'] ?></h2>
 
 
     </div>
@@ -66,7 +66,7 @@ $reponse2 = $bdd->query("SELECT * FROM com_commentaire WHERE com_art_oid = $id O
     <li class="col-md-2"><?= $donnees['art_date'] ?></li>
 </ul>
 </div>
-<div class="col-md-1 "><button class="pull-right btn btn-primary" type="submit" >Télécharger</button></div>
+<div class="col-md-1 "><button id='down' class="pull-right btn btn-primary">Télécharger</button></div>
 </section >
 
 <!-- section commentaires -->
@@ -99,7 +99,10 @@ $reponse2->closeCursor();
 
 
  <!-- formulaire d'ajout de commentaire -->
-    <h4>Ajouter un commentaire</h4>
+  
+</div>
+<div>
+<h4 class='container'>Ajouter un commentaire</h4>
  
     <form role="form" method="post">
 
@@ -128,13 +131,13 @@ $reponse2->closeCursor();
         </div>
 
         
-
+</div>
 
 
   </form>
-</div>
 
 </section>
 <script type='text/javascript' src='node_modules/jquery/dist/jquery.js'></script>
 <script type='text/javascript' src='node_modules/markdown/lib/markdown.js'></script>
+<script type="text/javascript" src='node_modules/file-saver/FileSaver.js'></script>
 <script type='text/javascript' src='assets/js/consult_article.js'></script>
