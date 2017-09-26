@@ -20,7 +20,7 @@ try {
 }
 
 //ajout dans la base
-if(!empty($_POST)) {
+if(!empty($_POST['pseudo']) && !empty($_POST['com'])) {
     
     try {
 
@@ -38,8 +38,11 @@ if(!empty($_POST)) {
   
 }
 
-?>
+$reponse->closeCursor();
 
+//affichage des commentaires
+$reponse2 = $bdd->query("SELECT * FROM com_commentaire WHERE com_art_oid = $id ORDER BY com_oid DESC");
+?>
 <!-- affichage html -->
 <section class="clearfix container" >
     <div class="row">
@@ -58,7 +61,7 @@ if(!empty($_POST)) {
  <div id="content"><?=$donnees['art_content'] ?></div>
  <hr>
  <ul class="row list-unstyled list_inline">
-    <li class='col-md-2 col-md-offset-8'><strong><?= $donnees['art_auteur'] ?></strong></li>
+    <li class='col-md-2 col-md-offset-8'><?= $donnees['art_auteur'] ?></li>
 
     <li class="col-md-2"><?= $donnees['art_date'] ?></li>
 </ul>
@@ -68,14 +71,8 @@ if(!empty($_POST)) {
 
 <!-- section commentaires -->
 <section >
-<h4><strong>Commentaires</strong></h4>
+<h4>Commentaires</h4>
 
-<?php
-$reponse->closeCursor();
-
-//affichage des commentaires
-$reponse2 = $bdd->query("SELECT * FROM com_commentaire WHERE com_art_oid = $id ORDER BY com_date DESC");
-?>
 
 <div class="container well pre-scrollable">
 

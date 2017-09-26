@@ -1,10 +1,10 @@
 <?php
     $endrequ = "";
     if(!empty($_GET['search'])){
-        $endrequ =sprintf(" and art_titre like '%%%s%%'",$_GET['search']);
+        $endrequ =sprintf(" and art_titre like '%%%s%%'",htmlspecialchars($_GET['search']));
     }
     if(!empty($_GET['tri'])){
-        $endrequ.=sprintf(" order by %s",$_GET['tri']);
+        $endrequ.=sprintf(" order by %s",htmlspecialchars($_GET['tri']));
     }   
     $response = $bdd->query("Select * from art_article, gnr_genre where art_gnr_oid = gnr_oid".$endrequ);
     $data=$response->fetchAll();

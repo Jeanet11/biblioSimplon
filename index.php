@@ -55,6 +55,11 @@ if($p==='suppr'){
 	$title ="suppresion...";
 	include 'pages/suppress.php';
 }
+if($p==='supprCom'){
+	$title ="suppresion...";
+	include 'pages/suppCom.php';
+}
+
 $content=ob_get_clean();
 if ($content == ''){
 	header("Location: ?p=home");
