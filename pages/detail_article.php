@@ -99,7 +99,10 @@ $reponse2->closeCursor();
 
 
  <!-- formulaire d'ajout de commentaire -->
-    <h4>Ajouter un commentaire</h4>
+  
+</div>
+<div>
+<h4 class='container'>Ajouter un commentaire</h4>
  
     <form role="form" method="post">
 
@@ -128,11 +131,10 @@ $reponse2->closeCursor();
         </div>
 
         
-
+</div>
 
 
   </form>
-</div>
 
 </section>
 <script type='text/javascript' src='node_modules/jquery/dist/jquery.js'></script>

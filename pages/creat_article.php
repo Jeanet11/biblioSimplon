@@ -44,7 +44,6 @@ try {
         <div class="form-group">
             <input require type="text" class="form-control" name="titre" id="titre" placeholder="Titre">
             <input type="text" name="auteur" class="form-control" id="auteur" placeholder="Auteur">
-            <select name="genre" id="genre" class="form-control">
                 <optgroup label="Genre">
                     <?php foreach ($sql_genre as $key => $value) :?>
                         <option value= <?= $value["gnr_oid"] ?>> <?= $value["gnr_libele"] ?> </option>
