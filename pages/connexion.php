@@ -1,5 +1,8 @@
 <?php
 //traitement PHP
+if(isset($_SESSION['login'])){
+    header("Location: ?p=home");
+}
 if (!empty($_POST)):
     //Récup des données saisies
     $mdp_saisi = htmlspecialchars($_POST["mdp"]);
